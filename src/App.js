@@ -1,24 +1,38 @@
-import logo from './logo.svg';
-import './App.css';
+import React from "react";
+
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import { ProcuctProvider } from "./context/ProductContext";
+import { CartProvider } from "./context/CartContext.js";
+
+import { HomePage } from "./page/HomePage";
+import { CartPage } from "./page/CartPage.jsx";
+import { ProductDetailPage } from "./page/ProductDetailPage.jsx";
+import { Header } from "./components/Header.jsx";
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Router>
+      <ProcuctProvider>
+        <CartProvider>
+          <Header />
+          <Switch>
+            <Route exact path="/" component={HomePage} />
+            {/* <HomePage /> */}
+            {/* </Route> */}
+            <Route path="/cart" component={CartPage} />
+            {/* <CartPage /> */}
+            {/* </Route> */}
+            <Route path="/products/:id" component={ProductDetailPage} />
+            {/* <ProductDetailPage /> */}
+            {/* </Route> */}
+            <Route path="/users">
+              <Route path="/me">my profile page</Route>
+              <Route path="/:userid">user profile</Route>
+            </Route>
+          </Switch>
+        </CartProvider>
+      </ProcuctProvider>
+    </Router>
   );
 }
 
